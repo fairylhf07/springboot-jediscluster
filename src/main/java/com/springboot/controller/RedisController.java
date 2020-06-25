@@ -16,15 +16,17 @@ public class RedisController {
     @Autowired
     private JedisCluster jedisCluster;
 
-    @PostMapping("/{name}")
-    public void setKey(@PathVariable(value = "name") String name){
-        jedisCluster.set("name",name);
+    @GetMapping("/{name}")
+    @ResponseBody
+    public String setKey(@PathVariable(value = "name") String name){
+        jedisCluster.set("username",name);
+        return "缓存成功";
     }
 
     @GetMapping("/name")
     @ResponseBody
-    public String getKey(String name){
-        return jedisCluster.get(name);
+    public String getKey(){
+        return jedisCluster.get("username");
     }
 
 }
